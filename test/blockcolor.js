@@ -1,6 +1,63 @@
 var BlockColor = artifacts.require("./BlockColor.sol");
 
 contract('BlockColor', function(accounts) {
+
+  it("should have correct route", function () {
+    BlockColor.deployed().then(function(instance) {
+      return instance.addToRoute(0, 0);
+    });
+    BlockColor.deployed().then(function(instance) {
+      return instance.addToRoute(0, 1);
+    });
+    BlockColor.deployed().then(function(instance) {
+      return instance.getRoute.call(0);
+    }).then(function(greens) {
+      assert.equal(greens.length, 2, "length is not 2")
+    });
+
+  });
+
+  it("should delete last route correctly", function () {
+    BlockColor.deployed().then(function(instance) {
+      return instance.addToRoute(0, 0);
+    });
+    BlockColor.deployed().then(function(instance) {
+      return instance.addToRoute(0, 1);
+    });
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.deleteRouteStep(0, 1);
+    });
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.getRoute.call(0);
+    }).then(function(greens) {
+      assert.equal(greens[0], 0, "route delete did not work")
+    });
+
+  });
+
+  it("should delete first route correctly", function () {
+    BlockColor.deployed().then(function(instance) {
+      return instance.addToRoute(0, 0);
+    });
+    BlockColor.deployed().then(function(instance) {
+      return instance.addToRoute(0, 1);
+    });
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.deleteRouteStep(0, 0);
+    });
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.getRoute.call(0);
+    }).then(function(greens) {
+      assert.equal(greens[0], 1, "route delete did not work")
+    });
+
+  });
+
+
   console.log("Adding user 1")
   BlockColor.deployed().then(function(instance) {
     return instance.addUser.sendTransaction(accounts[1]);
@@ -34,18 +91,22 @@ contract('BlockColor', function(accounts) {
     });
   });
 
-  //double remove user?
-
-  // BlockColor.deployed().then(function(instance) {
-  //   return instance.removeUser(accounts[1]);
-  // })
-
   BlockColor.deployed().then(function(instance) {
-    return instance.writeEvent("111", 1, "222");
+    return instance.writeEvent("111", 0, "222", 1);
   });
 
   BlockColor.deployed().then(function(instance) {
-    return instance.writeEvent("222", 2, "333", {from: accounts[1]});
+    return instance.writeEvent("222", 1, "333", 2, {from: accounts[1]});
+  });
+
+  it("should have correct colors length", function() {
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.getColorHashArray.call(1);
+    }).then(function(greens) {
+      assert.equal(greens.length, 1, "length is not 3")
+    });
+
   });
 
   it("color should be 2", function() {
@@ -74,4 +135,5 @@ contract('BlockColor', function(accounts) {
       });
     });
   });
+
 });

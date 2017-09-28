@@ -97,6 +97,39 @@ contract('BlockColor', function(accounts) {
     });
   });
 
+  it("create a ticket", function() {
+    BlockColor.deployed().then(function(instance) {
+      return instance.writeEvent("0", 0, "111", 0);
+    });
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.getColorHashArray.call(0);
+    }).then(function(greens) {
+      console.log(greens)
+      assert.equal(greens.length, 1, "length is not 1")
+    });
+  });
+
+  it("new reply", function() {
+    BlockColor.deployed().then(function(instance) {
+      return instance.writeEvent("111", 0, "222", 1);
+    });
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.getColorHashArray.call(0);
+    }).then(function(greens) {
+      console.log(greens)
+      // assert.equal(greens.length, 1, "length is not 1")
+    });
+
+    BlockColor.deployed().then(function(instance) {
+      return instance.getColorHashArray.call(1);
+    }).then(function(greens) {
+      console.log(greens)
+      assert.equal(greens.length, 1, "length is not 1")
+    });
+  });
+
   // add some colors
 
 });

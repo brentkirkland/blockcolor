@@ -26,7 +26,8 @@ contract BlockColor {
   }
 
   modifier onlyUser() {
-    require(user[msg.sender]);
+    // for the time being anyone can use it
+    /*require(user[msg.sender]);*/
     _;
   }
 
@@ -77,6 +78,7 @@ contract BlockColor {
     uint16 i = IndexOfHash(colors[color], hash);
     colors[color][i] = colors[color][colors[color].length-1];
     delete colors[color][colors[color].length-1];
+    colors[color].length--;
   }
 
   function addToRoute(uint16 color, uint16 route) onlyOwner {

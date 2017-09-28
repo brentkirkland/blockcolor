@@ -1,6 +1,8 @@
 # blockcolor
 
-This project aims to create a help ticket system that is built on the go-ethereum fork Quorum...
+[GUI](https://github.com/brentkirkland/ethereum-deck)
+
+This project aims to create a help ticket system that is built on the go-ethereum fork Quorum... and a demo that lives on a public testnet.
 
 By using a consortium chain, I can keep private company information hidden, while still verifying that a company is working on your issue.
 

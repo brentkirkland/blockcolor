@@ -1,5 +1,5 @@
-var BlockColor = artifacts.require("./BlockColor.sol");
+var BlockColorV2 = artifacts.require("./BlockColorV2.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(BlockColor);
+  deployer.deploy(BlockColorV2);
 };
